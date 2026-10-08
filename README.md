@@ -7,20 +7,16 @@ Polynomial regression models for two problems:
 
 ## Approach
 
-For each dataset, the pipeline is:
+For each dataset, the pipeline includes `PolynomialFeatures` expansion and a `StandardScaler`, followed by a regularized linear regressor. Rather than assuming one regularizer suits both problems, Ridge (L2) and Lasso (L1) were evaluated side by side.
 
-1. `PolynomialFeatures` (degree chosen by cross-validation)
-2. `StandardScaler`
-3. `RidgeCV` (L2 regularization, alpha tuned internally)
+The penalty strength was tuned internally, and the polynomial degree was selected using 5-fold cross-validation on the training set (highest mean R²):
 
-The degree is selected using 5-fold cross-validation on the training set (highest mean R²):
+| Problem | Selected Estimator | Selected degree | CV R² | CV MSE |
+|---------|--------------------|-----------------|-------|--------|
+| var1    | Lasso              | 5               | 0.9682| 0.3283 |
+| var2    | Ridge              | 10              | 0.9937| 0.2601 |
 
-| Problem | Degrees searched | Selected degree | CV R² |
-|---------|------------------|-----------------|-------|
-| var1    | 1-10             | 5               | 0.9512 |
-| var2    | 1-20             | 10              | 0.9937 |
-
-See `ml_assignment report.pdf` for the full write-up.
+See `ml_assignment.pdf` for the full write-up detailing the model comparison and selection reasoning.
 
 ## Files
 
@@ -29,7 +25,7 @@ See `ml_assignment report.pdf` for the full write-up.
 | `ml_assignment_1.py` | Training, degree selection and prediction code |
 | `BT2024075_pred_var1.csv` | Predictions for the var1 test set |
 | `BT2024075_pred_var2.csv` | Predictions for the var2 test set |
-| `ml_assignment report.pdf` | Project report |
+| `ml_assignment.pdf` | Project report |
 
 ## How to run
 
